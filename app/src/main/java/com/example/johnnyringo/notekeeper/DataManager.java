@@ -166,7 +166,7 @@ public class DataManager {
         modules.add(new ModuleInfo("java_lang_m03", "Variables, Data Types, and Math Operators"));
         modules.add(new ModuleInfo("java_lang_m04", "Conditional Logic, Looping, and Arrays"));
         modules.add(new ModuleInfo("java_lang_m05", "Representing Complex Types with Classes"));
-        modules.add(new ModuleInfo("java_lang_m06", "Class Initializers and Constructors"));
+        modules.add(new ModuleInfo("java_lang_m06", "Class Initializer and Constructors"));
         modules.add(new ModuleInfo("java_lang_m07", "A Closer Look at Parameters"));
         modules.add(new ModuleInfo("java_lang_m08", "Class Inheritance"));
         modules.add(new ModuleInfo("java_lang_m09", "More About Data Types"));
