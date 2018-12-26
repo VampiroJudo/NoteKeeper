@@ -2,6 +2,7 @@ package com.example.johnnyringo.notekeeper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +22,7 @@ public class NoteActivity extends AppCompatActivity {
     private Spinner mSpinnerCourses;
     private EditText mTextNoteTitle;
     private EditText mTextNoteText;
+    private int mNotePosition;
 
 
     @Override
@@ -48,6 +50,18 @@ public class NoteActivity extends AppCompatActivity {
             displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveNote();
+    }
+
+    private void saveNote() {
+        mNote.setCourse((CourseInfo) mSpinnerCourses.getSelectedItem());
+        mNote.setTitle(mTextNoteTitle.getText().toString());
+        mNote.setText(mTextNoteText.getText().toString());
+    }
+
     private void displayNote(Spinner spinnerCourses, EditText textNoteTitle, EditText textNoteText) {
         List<CourseInfo> courses = DataManager.getInstance().getCourses();
         int courseIndex = courses.indexOf(mNote.getCourse());
@@ -60,8 +74,17 @@ public class NoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int position = intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET);
         mIsNewNote = position == POSITION_NOT_SET;
-        if(!mIsNewNote)
+        if (mIsNewNote) {
+            createNewNote();
+        } else {
             mNote = DataManager.getInstance().getNotes().get(position);
+        }
+    }
+
+    private void createNewNote() {
+        DataManager dm = DataManager.getInstance();
+        mNotePosition = dm.createNewNote();
+        mNote = dm.getNotes().get((mNotePosition));
     }
 
     @Override
