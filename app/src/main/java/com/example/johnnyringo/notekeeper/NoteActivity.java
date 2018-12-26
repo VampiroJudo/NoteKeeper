@@ -15,7 +15,7 @@ import java.util.List;
 import static android.R.layout.simple_spinner_dropdown_item;
 
 public class NoteActivity extends AppCompatActivity {
-    public static final String NOTE_INFO = "com.example.johnnyringo.notekeeper.NOTE_INFO";
+    public static final String NOTE_POSITION = "com.example.johnnyringo.notekeeper.NOTE_POSITION";
     private NoteInfo mNote;
     private boolean mIsNewNote;
 
@@ -55,8 +55,10 @@ public class NoteActivity extends AppCompatActivity {
 
     private void readDisplayStateValues() {
         Intent intent = getIntent();
-        mNote = intent.getParcelableExtra(NOTE_INFO);
-        boolean mIsNewNote = mNote == null;
+        int position = intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET);
+        mIsNewNote = position == POSITION_NOT_SET;
+        if(!mIsNewNote)
+            mNote = DataManager.getInstance().getNotes().get(position);
     }
 
     @Override
